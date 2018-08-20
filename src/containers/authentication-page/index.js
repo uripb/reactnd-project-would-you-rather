@@ -1,29 +1,64 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { receiveUsers } from 'actions';
+import { receiveUsers, setAuthedUser } from 'actions';
 import './styles.scss';
 
-const mapStateToProps = ({ authentication, users }) => ({ auth: authentication, users });
+const mapStateToProps = ({ users }) => ({
+  users,
+});
 
 const mapDispatchToProps = {
-  receiveUsersFunc: receiveUsers,
+  receiveUsersFn: receiveUsers,
+  setAuthedUserFn: setAuthedUser,
 };
 
 class AuthenticationPage extends Component {
-  componentDidMount() {
-    const { receiveUsersFunc } = this.props;
-    receiveUsersFunc();
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: '',
+    };
   }
+
+  componentDidMount() {
+    const { receiveUsersFn } = this.props;
+    receiveUsersFn();
+  }
+
+  onChangeSelect = (selectedUser) => {
+    this.setState({
+      user: selectedUser,
+    });
+  };
+
+  handleSubmit = () => {
+    const { user } = this.state;
+    const { users, setAuthedUserFn, history } = this.props;
+
+    if (Object.keys(users).includes(user)) {
+      setAuthedUserFn(user);
+      history.push('/app/home');
+    } else {
+      // TODO: show error
+      console.warn('error login');
+    }
+  };
 
   renderSelect = () => {
     const { users } = this.props;
 
     return (
-      <select className="form-control" id="users">
-        <option value="">Select an option...</option>
+      <select
+        className="form-control"
+        id="users"
+        onChange={e => this.onChangeSelect(e.target.value)}
+      >
+        <option value="">Select user...</option>
         {Object.keys(users).map(key => (
-          <option value={users[key].id}>{users[key].name}</option>
+          <option key={key} value={users[key].id}>
+            {users[key].name}
+          </option>
         ))}
       </select>
     );
@@ -39,10 +74,14 @@ class AuthenticationPage extends Component {
           </div>
           <div className="card-body">
             <div className="form-group">
-              <label htmlFor="users">Select User</label>
+              <label htmlFor="users">User</label>
               {this.renderSelect()}
             </div>
-            <button type="button" className="btn btn-primary btn-lg btn-block">
+            <button
+              type="button"
+              className="btn btn-primary btn-lg btn-block"
+              onClick={this.handleSubmit}
+            >
               Sign in
             </button>
           </div>
@@ -54,10 +93,12 @@ class AuthenticationPage extends Component {
 
 AuthenticationPage.defaultProps = {
   users: {},
+  history: {},
 };
 
 AuthenticationPage.propTypes = {
-  receiveUsersFunc: PropTypes.func.isRequired,
+  receiveUsersFn: PropTypes.func.isRequired,
+  setAuthedUserFn: PropTypes.func.isRequired,
   users: PropTypes.objectOf(
     PropTypes.shape({
       answers: PropTypes.shape({}),
@@ -66,6 +107,7 @@ AuthenticationPage.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ),
+  history: PropTypes.shape({}),
 };
 
 export default connect(

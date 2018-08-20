@@ -22,8 +22,12 @@ const App = (props) => {
   );
 };
 
+App.defaultProps = {
+  loading: false,
+};
+
 App.propTypes = {
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default App;
