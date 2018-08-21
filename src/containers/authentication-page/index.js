@@ -65,6 +65,8 @@ class AuthenticationPage extends Component {
   };
 
   render() {
+    const { user } = this.state;
+
     return (
       <div className="container auth-container">
         <div className="card">
@@ -81,6 +83,7 @@ class AuthenticationPage extends Component {
               type="button"
               className="btn btn-primary btn-lg btn-block"
               onClick={this.handleSubmit}
+              disabled={user.length === 0}
             >
               Sign in
             </button>

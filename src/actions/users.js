@@ -12,7 +12,8 @@ function receiveUsersAction(users) {
 export function receiveUsers() {
   return (dispatch) => {
     dispatch(showLoading());
-    getUsers()
+
+    return getUsers()
       .then(
         response => dispatch(receiveUsersAction(response)),
         (error) => {

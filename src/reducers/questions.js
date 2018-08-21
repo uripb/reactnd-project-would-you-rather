@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS } from 'constants/ActionTypes';
+import { RECEIVE_QUESTIONS, ADD_QUESTION } from 'constants/ActionTypes';
 
 export default function users(state = {}, action) {
   switch (action.type) {
@@ -6,6 +6,13 @@ export default function users(state = {}, action) {
       return {
         ...state,
         ...action.questions,
+      };
+    case ADD_QUESTION:
+      return {
+        ...state,
+        [action.question.id]: {
+          ...action.question,
+        },
       };
     default:
       return state;

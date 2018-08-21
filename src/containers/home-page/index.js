@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { NavItem, QuestionsTab } from 'components';
-import { receiveQuestions } from 'actions';
+import { handleQuestions } from 'actions';
 import './styles.scss';
 
 const mapStateToProps = ({ questions, users, authedUser }) => {
@@ -18,7 +18,7 @@ const mapStateToProps = ({ questions, users, authedUser }) => {
 };
 
 const mapDispatchToProps = {
-  getQuestions: receiveQuestions,
+  getQuestions: handleQuestions,
 };
 
 class HomePage extends Component {

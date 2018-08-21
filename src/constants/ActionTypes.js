@@ -7,3 +7,4 @@ export const CLEAR_AUTHED_USER = 'CLEAR_AUTHED_USER';
 
 // questions
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
+export const ADD_QUESTION = 'ADD_QUESTION';

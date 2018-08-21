@@ -1,7 +1,7 @@
 import { receiveUsers } from './users';
 import { setAuthedUser, clearAuthedUser } from './authedUser';
-import { receiveQuestions } from './questions';
+import { handleQuestions, handleAddQuestion } from './questions';
 
 export {
-  receiveUsers, setAuthedUser, clearAuthedUser, receiveQuestions,
+  receiveUsers, setAuthedUser, clearAuthedUser, handleQuestions, handleAddQuestion,
 };
