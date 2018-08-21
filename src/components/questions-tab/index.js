@@ -1,32 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { QuestionItem } from 'components';
 import './styles.scss';
 
-class QuestionsTab extends Component {
-  renderQuestions() {
-    const { questions, users, user } = this.props;
-
-    return questions.map(
-      question => (user === null
-        || question.optionOne.votes.includes(user)
-        || question.optionTwo.votes.includes(user) ? (
-          <QuestionItem key={question.id} question={question} user={users[question.author]} />
-        ) : (
-          ''
-        )),
-    );
-  }
-
-  render() {
-    return <div className="tab-content">{this.renderQuestions()}</div>;
-  }
-}
+const QuestionsTab = ({ questions, users }) => (
+  <div className="tab-content">
+    {questions.map(question => (
+      <QuestionItem key={question.id} question={question} user={users[question.author]} />
+    ))}
+  </div>
+);
 
 QuestionsTab.defaultProps = {
   questions: [],
   users: [],
-  user: null,
 };
 
 QuestionsTab.propTypes = {
@@ -53,7 +40,6 @@ QuestionsTab.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ),
-  user: PropTypes.string,
 };
 
 export default QuestionsTab;

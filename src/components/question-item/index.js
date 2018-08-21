@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
-class QuestionItem extends Component {
+class QuestionItem extends PureComponent {
   onClick = () => {};
 
   render() {

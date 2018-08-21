@@ -2,17 +2,18 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { NavItem } from 'components';
-import QuestionsTab from 'containers/questions-tab';
+import { NavItem, QuestionsTab } from 'components';
 import { receiveQuestions } from 'actions';
 import './styles.scss';
 
 const mapStateToProps = ({ questions, users, authedUser }) => {
-  const questionsList = Object.values(questions);
+  const questionsList = Object.values(questions).sort((a, b) => b.timestamp - a.timestamp);
   return {
-    questions: questionsList.sort((a, b) => b.timestamp - a.timestamp),
+    questions: questionsList,
     users,
-    authedUser,
+    userQuestions: questionsList.filter(
+      q => q.optionOne.votes.includes(authedUser) || q.optionTwo.votes.includes(authedUser),
+    ),
   };
 };
 
@@ -73,7 +74,7 @@ class HomePage extends Component {
 
   render() {
     const {
-      match, questions, users, authedUser,
+      match, questions, users, userQuestions,
     } = this.props;
 
     return (
@@ -89,7 +90,7 @@ class HomePage extends Component {
               <Route
                 path={`${match.path}/answered`}
                 render={props => (
-                  <QuestionsTab {...props} questions={questions} users={users} user={authedUser} />
+                  <QuestionsTab {...props} questions={userQuestions} users={users} />
                 )}
               />
               <Redirect to={`${match.path}/unanswered`} />
