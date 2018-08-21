@@ -58,7 +58,7 @@ class NewQuestionPage extends PureComponent {
 
     return (
       <div className="container new-question-container">
-        <div className="card new-question-card mt-3">
+        <div className="card new-question-card mt-5">
           <div className="card-header">Create New Question</div>
           <div className="card-body">
             <form onSubmit={this.handleSubmit}>

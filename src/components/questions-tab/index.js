@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { QuestionItem } from 'components';
+import { QuestionItem, QuestionItemDetail } from 'components';
 import './styles.scss';
 
 const QuestionsTab = ({ questions, users, onViewPollClick }) => (
   <div className="tab-content">
     {questions.map(question => (
-      <QuestionItem
-        key={question.id}
-        question={question}
-        user={users[question.author]}
-        onViewPollClick={onViewPollClick}
-      />
+      <QuestionItem key={question.id} user={users[question.author]}>
+        <QuestionItemDetail question={question} onViewPollClick={onViewPollClick} />
+      </QuestionItem>
     ))}
   </div>
 );

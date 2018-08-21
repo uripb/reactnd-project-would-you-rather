@@ -1,27 +1,24 @@
 @import "colors.scss";
 .card-question-item {
+  max-width: 600px;
+  margin: auto;
   .card-header {
     font-size: 16px;
     font-weight: 500;
   }
   .card-body {
-    .card-title {
-      font-size: 14px;
-    }
-    .card-text {
-      margin-bottom: 1rem;
-    }
+    padding: 14px;
     .avatar {
-      padding-right: 30px;
-      margin-right: 30px;
       border-right: 1px solid $tabBorder;
+      text-align: center;
       img {
         width: 105px;
         border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
-    }
-    .card-info {
-      width: 340px;
     }
   }
 }
