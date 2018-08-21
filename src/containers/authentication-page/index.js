@@ -38,7 +38,7 @@ class AuthenticationPage extends Component {
 
     if (Object.keys(users).includes(user)) {
       setAuthedUserFn(user);
-      history.push('/app/home');
+      history.push('/');
     } else {
       // TODO: show error
       console.warn('error login');

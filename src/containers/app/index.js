@@ -13,9 +13,9 @@ const App = (props) => {
       <LoadingBar style={{ zIndex: 99999 }} />
       {loading === true ? null : (
         <Switch>
-          <Route path="/auth/login" component={AuthenticationPage} />
-          <AuthorizedRoute path="/app" component={DefaultPage} />
-          <Redirect to="/auth/login" />
+          <Route path="/login" component={AuthenticationPage} />
+          <AuthorizedRoute path="/" component={DefaultPage} />
+          <Redirect to="/login" />
         </Switch>
       )}
     </Fragment>

@@ -21,14 +21,17 @@ class Nav extends Component {
         home: {
           label: 'Home',
           active: true,
+          route: '/',
         },
-        question: {
+        add: {
           label: 'New Question',
           active: false,
+          route: '/add',
         },
-        leader: {
+        leaderboard: {
           label: 'Leader Board',
           active: false,
+          route: '/leaderboard',
         },
       },
     };
@@ -60,7 +63,7 @@ class Nav extends Component {
         <NavItem
           key={key}
           label={section.label}
-          to={`/app/${key}`}
+          to={section.route}
           active={section.active}
           onClick={() => this.onClickNavItem(key)}
         />

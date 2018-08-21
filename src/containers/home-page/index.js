@@ -64,7 +64,7 @@ class HomePage extends Component {
         <NavItem
           key={key}
           label={section.label}
-          to={`/app/home/${key}`}
+          to={`/${key}`}
           active={section.active}
           onClick={() => this.onClickTab(key)}
         />
@@ -84,16 +84,16 @@ class HomePage extends Component {
             <ul className="nav nav-tabs">{this.renderTabs()}</ul>
             <Switch>
               <Route
-                path={`${match.path}/unanswered`}
+                path="/unanswered"
                 render={props => <QuestionsTab {...props} questions={questions} users={users} />}
               />
               <Route
-                path={`${match.path}/answered`}
+                path="/answered"
                 render={props => (
                   <QuestionsTab {...props} questions={userQuestions} users={users} />
                 )}
               />
-              <Redirect to={`${match.path}/unanswered`} />
+              <Redirect to="/unanswered" />
             </Switch>
           </Fragment>
         )}
