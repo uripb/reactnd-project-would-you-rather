@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { handleAddQuestion } from 'actions';
 import './styles.scss';
 
@@ -102,16 +103,14 @@ class NewQuestionPage extends PureComponent {
   }
 }
 
-NewQuestionPage.defaultProps = {
-  history: {},
-};
-
 NewQuestionPage.propTypes = {
   addQuestion: PropTypes.func.isRequired,
-  history: PropTypes.shape({}),
+  history: PropTypes.shape({}).isRequired,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(NewQuestionPage);
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps,
+  )(NewQuestionPage),
+);

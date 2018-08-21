@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import {
+  Switch, Route, Redirect, withRouter,
+} from 'react-router-dom';
 import { NavItem, QuestionsTab } from 'components';
 import { handleQuestions } from 'actions';
 import './styles.scss';
@@ -55,6 +57,13 @@ class HomePage extends Component {
     });
   };
 
+  onViewPollClick = (questionId) => {
+    const { history } = this.props;
+    if (questionId.length > 0) {
+      history.push(`/questions/${questionId}`);
+    }
+  };
+
   renderTabs() {
     const { tabs } = this.state;
 
@@ -73,9 +82,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const {
-      match, questions, users, userQuestions,
-    } = this.props;
+    const { questions, users, userQuestions } = this.props;
 
     return (
       <div className="container home-container mt-3">
@@ -85,12 +92,24 @@ class HomePage extends Component {
             <Switch>
               <Route
                 path="/unanswered"
-                render={props => <QuestionsTab {...props} questions={questions} users={users} />}
+                render={props => (
+                  <QuestionsTab
+                    {...props}
+                    questions={questions}
+                    users={users}
+                    onViewPollClick={this.onViewPollClick}
+                  />
+                )}
               />
               <Route
                 path="/answered"
                 render={props => (
-                  <QuestionsTab {...props} questions={userQuestions} users={users} />
+                  <QuestionsTab
+                    {...props}
+                    questions={userQuestions}
+                    users={users}
+                    onViewPollClick={this.onViewPollClick}
+                  />
                 )}
               />
               <Redirect to="/unanswered" />
@@ -108,7 +127,6 @@ HomePage.defaultProps = {
 };
 
 HomePage.propTypes = {
-  match: PropTypes.shape({}).isRequired,
   getQuestions: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -133,9 +151,12 @@ HomePage.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ),
+  history: PropTypes.shape({}).isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(HomePage);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(HomePage),
+);

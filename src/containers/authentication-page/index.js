@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { receiveUsers, setAuthedUser } from 'actions';
 import './styles.scss';
 
@@ -96,7 +97,6 @@ class AuthenticationPage extends Component {
 
 AuthenticationPage.defaultProps = {
   users: {},
-  history: {},
 };
 
 AuthenticationPage.propTypes = {
@@ -110,10 +110,12 @@ AuthenticationPage.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ),
-  history: PropTypes.shape({}),
+  history: PropTypes.shape({}).isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AuthenticationPage);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(AuthenticationPage),
+);

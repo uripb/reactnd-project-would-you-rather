@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import './styles.scss';
 
 class QuestionItem extends PureComponent {
-  onClick = () => {};
+  onClick = (id) => {
+    const { onViewPollClick } = this.props;
+    onViewPollClick(id);
+  };
 
   render() {
     const { question, user } = this.props;
@@ -17,7 +20,11 @@ class QuestionItem extends PureComponent {
           <div className="float-left card-info">
             <h5 className="card-title">Would you rather</h5>
             <p className="card-text">{`...${question.optionOne.text.substring(0, 15)}...`}</p>
-            <button type="button" className="btn btn-outline-info w-100">
+            <button
+              type="button"
+              className="btn btn-outline-info w-100"
+              onClick={() => this.onClick(question.id)}
+            >
               View Poll
             </button>
           </div>
@@ -26,6 +33,10 @@ class QuestionItem extends PureComponent {
     );
   }
 }
+
+QuestionItem.defaultProps = {
+  onViewPollClick: () => null,
+};
 
 QuestionItem.propTypes = {
   question: PropTypes.shape({
@@ -47,6 +58,7 @@ QuestionItem.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
+  onViewPollClick: PropTypes.func,
 };
 
 export default QuestionItem;

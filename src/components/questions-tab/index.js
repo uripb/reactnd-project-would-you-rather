@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import { QuestionItem } from 'components';
 import './styles.scss';
 
-const QuestionsTab = ({ questions, users }) => (
+const QuestionsTab = ({ questions, users, onViewPollClick }) => (
   <div className="tab-content">
     {questions.map(question => (
-      <QuestionItem key={question.id} question={question} user={users[question.author]} />
+      <QuestionItem
+        key={question.id}
+        question={question}
+        user={users[question.author]}
+        onViewPollClick={onViewPollClick}
+      />
     ))}
   </div>
 );
@@ -14,6 +19,7 @@ const QuestionsTab = ({ questions, users }) => (
 QuestionsTab.defaultProps = {
   questions: [],
   users: [],
+  onViewPollClick: () => null,
 };
 
 QuestionsTab.propTypes = {
@@ -40,6 +46,7 @@ QuestionsTab.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ),
+  onViewPollClick: PropTypes.func,
 };
 
 export default QuestionsTab;
