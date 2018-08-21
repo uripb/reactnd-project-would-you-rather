@@ -1,4 +1,4 @@
 import { receiveUsers } from './users';
-import { setAuthedUser } from './authedUser';
+import { setAuthedUser, clearAuthedUser } from './authedUser';
 
-export { receiveUsers, setAuthedUser };
+export { receiveUsers, setAuthedUser, clearAuthedUser };

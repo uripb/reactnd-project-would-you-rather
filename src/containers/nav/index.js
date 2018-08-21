@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { NavItem } from 'components';
+import { clearAuthedUser } from 'actions';
 import './styles.scss';
+
+const mapStateToProps = ({ users, authedUser }) => ({
+  user: users[authedUser],
+});
+
+const mapDispatchToProps = {
+  logout: clearAuthedUser,
+};
 
 class Nav extends Component {
   constructor(props) {
@@ -35,11 +46,17 @@ class Nav extends Component {
     });
   };
 
+  handleLogout = () => {
+    const { logout } = this.props;
+    logout();
+  };
+
   render() {
     const { sections } = this.state;
+    const { user } = this.props;
     return (
       <nav className="navbar navbar-expand navbar-light bg-light">
-        <ul className="navbar-nav">
+        <ul className="navbar-nav mr-auto">
           {Object.keys(sections).map((key) => {
             const section = sections[key];
             return (
@@ -53,9 +70,29 @@ class Nav extends Component {
             );
           })}
         </ul>
+        <div className="form-inline">
+          <img className="navbar-avatar" alt={user.name} src={user.avatarURL} />
+          <span className="navbar-text">{`Hello, ${user.name}`}</span>
+          <button type="button" className="btn btn-outline-secondary" onClick={this.handleLogout}>
+            Logout
+          </button>
+        </div>
       </nav>
     );
   }
 }
 
-export default Nav;
+Nav.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    avatarURL: PropTypes.string,
+    answers: PropTypes.shape({}),
+  }).isRequired,
+  logout: PropTypes.func.isRequired,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Nav);
