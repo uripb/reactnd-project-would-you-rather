@@ -6,7 +6,7 @@ const NavItem = ({
   label, to, active, onClick,
 }) => (
   <li className={`nav-item ${active ? 'active' : ''}`} onClick={onClick}>
-    <Link to={to} className="nav-link">
+    <Link to={to} className={`nav-link ${active ? 'active' : ''}`}>
       {label}
     </Link>
   </li>

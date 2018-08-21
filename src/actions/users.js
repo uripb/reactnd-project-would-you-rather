@@ -1,5 +1,6 @@
 import { RECEIVE_USERS } from 'constants/ActionTypes';
 import { getUsers } from 'api';
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
 function receiveUsersAction(users) {
   return {
@@ -9,11 +10,16 @@ function receiveUsersAction(users) {
 }
 
 export function receiveUsers() {
-  return dispatch => getUsers().then(
-    response => dispatch(receiveUsersAction(response)),
-    (error) => {
-      console.error(error);
-      throw error;
-    },
-  );
+  return (dispatch) => {
+    dispatch(showLoading());
+    getUsers()
+      .then(
+        response => dispatch(receiveUsersAction(response)),
+        (error) => {
+          console.error(error);
+          throw error;
+        },
+      )
+      .then(() => dispatch(hideLoading()));
+  };
 }

@@ -10,7 +10,7 @@ const App = (props) => {
   const { loading } = props;
   return (
     <Fragment>
-      <LoadingBar />
+      <LoadingBar style={{ zIndex: 99999 }} />
       {loading === true ? null : (
         <Switch>
           <Route path="/auth/login" component={AuthenticationPage} />

@@ -51,25 +51,28 @@ class Nav extends Component {
     logout();
   };
 
-  render() {
+  renderNavItems() {
     const { sections } = this.state;
+
+    return Object.keys(sections).map((key) => {
+      const section = sections[key];
+      return (
+        <NavItem
+          key={key}
+          label={section.label}
+          to={`/app/${key}`}
+          active={section.active}
+          onClick={() => this.onClickNavItem(key)}
+        />
+      );
+    });
+  }
+
+  render() {
     const { user } = this.props;
     return (
-      <nav className="navbar navbar-expand navbar-light bg-light">
-        <ul className="navbar-nav mr-auto">
-          {Object.keys(sections).map((key) => {
-            const section = sections[key];
-            return (
-              <NavItem
-                key={key}
-                label={section.label}
-                to={`/app/${key}`}
-                active={section.active}
-                onClick={() => this.onClickNavItem(key)}
-              />
-            );
-          })}
-        </ul>
+      <nav className="navbar fixed-top navbar-expand navbar-light bg-light">
+        <ul className="navbar-nav mr-auto">{this.renderNavItems()}</ul>
         <div className="form-inline">
           <img className="navbar-avatar" alt={user.name} src={user.avatarURL} />
           <span className="navbar-text">{`Hello, ${user.name}`}</span>
