@@ -30,6 +30,7 @@ export function handleQuestions() {
       .then(
         response => dispatch(receiveQuestions(response)),
         (error) => {
+          // eslint-disable-next-line
           console.error(error);
           throw error;
         },

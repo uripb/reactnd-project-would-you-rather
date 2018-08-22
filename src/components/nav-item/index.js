@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import './styles.scss';
 
 const NavItem = ({
   label, to, active, onClick,
 }) => (
   <li className={`nav-item ${active ? 'active' : ''}`} onClick={onClick}>
-    <Link to={to} className={`nav-link ${active ? 'active' : ''}`}>
-      {label}
-    </Link>
+    <span className={`nav-link ${active ? 'active' : ''}`}>{label}</span>
   </li>
 );
 

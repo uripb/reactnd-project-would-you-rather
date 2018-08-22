@@ -41,7 +41,7 @@ class AuthenticationPage extends Component {
       setAuthedUserFn(user);
       history.push('/');
     } else {
-      // TODO: show error
+      // eslint-disable-next-line
       console.warn('error login');
     }
   };

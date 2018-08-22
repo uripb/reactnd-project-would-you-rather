@@ -17,6 +17,7 @@ export function receiveUsers() {
       .then(
         response => dispatch(receiveUsersAction(response)),
         (error) => {
+          // eslint-disable-next-line
           console.error(error);
           throw error;
         },

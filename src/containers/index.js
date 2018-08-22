@@ -4,7 +4,14 @@ import NewQuestionPage from './new-question-page';
 import LeaderBoardPage from './leader-board-page';
 import Nav from './nav';
 import PollPage from './poll-page';
+import NotFoundPage from './not-found-page';
 
 export {
-  AuthenticationPage, HomePage, Nav, NewQuestionPage, LeaderBoardPage, PollPage,
+  AuthenticationPage,
+  HomePage,
+  Nav,
+  NewQuestionPage,
+  LeaderBoardPage,
+  PollPage,
+  NotFoundPage,
 };

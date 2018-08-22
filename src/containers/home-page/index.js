@@ -1,9 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Switch, Route, Redirect, withRouter,
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { NavItem, QuestionsTab } from 'components';
 import { handleQuestions } from 'actions';
 import './styles.scss';
@@ -80,39 +78,26 @@ class HomePage extends Component {
     });
   }
 
-  render() {
-    const { answeredQ, unansweredQ, users } = this.props;
+  renderTabContent() {
+    const { tabs } = this.state;
+    const { users, unansweredQ, answeredQ } = this.props;
+    return (
+      <QuestionsTab
+        questions={tabs.unanswered.active ? unansweredQ : answeredQ}
+        users={users}
+        onViewPollClick={this.onViewPollClick}
+      />
+    );
+  }
 
+  render() {
+    const { unansweredQ, answeredQ } = this.props;
     return (
       <div className="container home-container mt-3">
         {(answeredQ.length > 0 || unansweredQ.length > 0) && (
           <Fragment>
             <ul className="nav nav-tabs">{this.renderTabs()}</ul>
-            <Switch>
-              <Route
-                path="/unanswered"
-                render={props => (
-                  <QuestionsTab
-                    {...props}
-                    questions={unansweredQ}
-                    users={users}
-                    onViewPollClick={this.onViewPollClick}
-                  />
-                )}
-              />
-              <Route
-                path="/answered"
-                render={props => (
-                  <QuestionsTab
-                    {...props}
-                    questions={answeredQ}
-                    users={users}
-                    onViewPollClick={this.onViewPollClick}
-                  />
-                )}
-              />
-              <Redirect to="/unanswered" />
-            </Switch>
+            {this.renderTabContent()}
           </Fragment>
         )}
       </div>
