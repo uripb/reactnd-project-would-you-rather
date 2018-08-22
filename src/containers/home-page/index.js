@@ -12,9 +12,9 @@ const mapStateToProps = ({ questions, users, authedUser }) => {
   const questionsList = Object.values(questions).sort((a, b) => b.timestamp - a.timestamp);
   const userAnswers = Object.keys(users[authedUser].answers);
   return {
-    questions: questionsList,
+    unansweredQ: questionsList.filter(q => !userAnswers.includes(q.id)),
     users,
-    userAnsweredQuestions: questionsList.filter(q => userAnswers.includes(q.id)),
+    answeredQ: questionsList.filter(q => userAnswers.includes(q.id)),
   };
 };
 
@@ -81,11 +81,11 @@ class HomePage extends Component {
   }
 
   render() {
-    const { questions, users, userAnsweredQuestions } = this.props;
+    const { answeredQ, unansweredQ, users } = this.props;
 
     return (
       <div className="container home-container mt-3">
-        {questions.length > 0 && (
+        {(answeredQ.length > 0 || unansweredQ.length > 0) && (
           <Fragment>
             <ul className="nav nav-tabs">{this.renderTabs()}</ul>
             <Switch>
@@ -94,7 +94,7 @@ class HomePage extends Component {
                 render={props => (
                   <QuestionsTab
                     {...props}
-                    questions={questions}
+                    questions={unansweredQ}
                     users={users}
                     onViewPollClick={this.onViewPollClick}
                   />
@@ -105,7 +105,7 @@ class HomePage extends Component {
                 render={props => (
                   <QuestionsTab
                     {...props}
-                    questions={userAnsweredQuestions}
+                    questions={answeredQ}
                     users={users}
                     onViewPollClick={this.onViewPollClick}
                   />
@@ -121,13 +121,29 @@ class HomePage extends Component {
 }
 
 HomePage.defaultProps = {
-  questions: [],
+  unansweredQ: [],
+  answeredQ: [],
   users: [],
 };
 
 HomePage.propTypes = {
   getQuestions: PropTypes.func.isRequired,
-  questions: PropTypes.arrayOf(
+  unansweredQ: PropTypes.arrayOf(
+    PropTypes.shape({
+      author: PropTypes.string,
+      id: PropTypes.string.isRequired,
+      optionOne: PropTypes.shape({
+        text: PropTypes.string.isRequired,
+        votes: PropTypes.arrayOf(PropTypes.string),
+      }),
+      optionTwo: PropTypes.shape({
+        text: PropTypes.string.isRequired,
+        votes: PropTypes.arrayOf(PropTypes.string),
+      }),
+      timestamp: PropTypes.number,
+    }),
+  ),
+  answeredQ: PropTypes.arrayOf(
     PropTypes.shape({
       author: PropTypes.string,
       id: PropTypes.string.isRequired,
