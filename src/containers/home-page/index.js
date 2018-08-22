@@ -70,7 +70,6 @@ class HomePage extends Component {
         <NavItem
           key={key}
           label={section.label}
-          to={`/${key}`}
           active={section.active}
           onClick={() => this.onClickTab(key)}
         />
