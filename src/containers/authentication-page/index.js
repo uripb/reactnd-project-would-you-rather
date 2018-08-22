@@ -41,7 +41,7 @@ class AuthenticationPage extends Component {
 
     if (Object.keys(users).includes(user)) {
       setAuthedUserFn(user);
-      if (location.state.referrer.length > 0) {
+      if (location.state && location.state.referrer.length > 0) {
         history.push(location.state.referrer);
       } else {
         history.push('/');

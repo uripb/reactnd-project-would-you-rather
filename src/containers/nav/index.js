@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { NavItem } from 'components';
 import { clearAuthedUser } from 'actions';
 import './styles.scss';
@@ -51,7 +52,8 @@ class Nav extends Component {
   };
 
   handleLogout = () => {
-    const { logout } = this.props;
+    const { logout, history } = this.props;
+    history.push('/login');
     logout();
   };
 
@@ -98,9 +100,12 @@ Nav.propTypes = {
   }).isRequired,
   logout: PropTypes.func.isRequired,
   location: PropTypes.shape({}).isRequired,
+  history: PropTypes.shape({}).isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Nav);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Nav),
+);
