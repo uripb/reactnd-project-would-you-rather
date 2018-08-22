@@ -2,12 +2,12 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { QuestionItem, QuestionItemPoll, QuestionItemResults } from 'components';
-import { handleAnswerQuestion } from 'actions';
+import { handleAnswerQuestion, handleQuestions } from 'actions';
 
 const mapStateToProps = ({ questions, authedUser, users }, ownProps) => {
   const { match } = ownProps;
   const question = questions[match.params.question_id];
-  const user = users[question.author];
+  const user = question ? users[question.author] : {};
   return {
     question,
     authedUser: users[authedUser],
@@ -17,9 +17,15 @@ const mapStateToProps = ({ questions, authedUser, users }, ownProps) => {
 
 const mapDispatchToProps = {
   answerQuestion: handleAnswerQuestion,
+  getQuestions: handleQuestions,
 };
 
 class PollPage extends PureComponent {
+  componentDidMount() {
+    const { getQuestions } = this.props;
+    getQuestions();
+  }
+
   onSubmitClick = (qid, answer) => {
     const { answerQuestion } = this.props;
     answerQuestion(qid, answer);
@@ -38,6 +44,11 @@ class PollPage extends PureComponent {
 
   render() {
     const { user, authedUser, question } = this.props;
+
+    if (!question) {
+      return <div>Loading...</div>;
+    }
+
     const isAnswered = Object.keys(authedUser.answers).includes(question.id);
     return (
       <div className="container poll-page-container mt-5">
@@ -54,6 +65,7 @@ PollPage.defaultProps = {
 };
 
 PollPage.propTypes = {
+  getQuestions: PropTypes.func.isRequired,
   question: PropTypes.shape({
     author: PropTypes.string,
     id: PropTypes.string.isRequired,

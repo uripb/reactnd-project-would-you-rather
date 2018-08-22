@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 import { AuthenticationPage } from 'containers';
 import DefaultPage from 'containers/default-page';
@@ -15,7 +15,6 @@ const App = (props) => {
         <Switch>
           <Route path="/login" component={AuthenticationPage} />
           <AuthorizedRoute path="/" component={DefaultPage} />
-          <Redirect to="/login" />
         </Switch>
       )}
     </Fragment>

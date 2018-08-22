@@ -14,7 +14,17 @@ const AuthorizedRoute = (props) => {
   return (
     <Route
       {...rest}
-      render={propsAux => (isAuth ? <Component {...propsAux} /> : <Redirect to="/login" />)}
+      render={propsAux => (isAuth ? (
+        <Component {...propsAux} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { referrer: props.location.pathname },
+          }}
+        />
+      ))
+      }
     />
   );
 };

@@ -16,21 +16,22 @@ const mapDispatchToProps = {
 class Nav extends Component {
   constructor(props) {
     super(props);
+    const { location } = props;
     this.state = {
       sections: {
         home: {
           label: 'Home',
-          active: true,
+          active: location.pathname === '/',
           route: '/',
         },
         add: {
           label: 'New Question',
-          active: false,
+          active: location.pathname === '/add',
           route: '/add',
         },
         leaderboard: {
           label: 'Leader Board',
-          active: false,
+          active: location.pathname === '/leaderboard',
           route: '/leaderboard',
         },
       },
@@ -96,6 +97,7 @@ Nav.propTypes = {
     answers: PropTypes.shape({}),
   }).isRequired,
   logout: PropTypes.func.isRequired,
+  location: PropTypes.shape({}).isRequired,
 };
 
 export default connect(

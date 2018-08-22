@@ -35,11 +35,17 @@ class AuthenticationPage extends Component {
 
   handleSubmit = () => {
     const { user } = this.state;
-    const { users, setAuthedUserFn, history } = this.props;
+    const {
+      users, setAuthedUserFn, history, location,
+    } = this.props;
 
     if (Object.keys(users).includes(user)) {
       setAuthedUserFn(user);
-      history.push('/');
+      if (location.state.referrer.length > 0) {
+        history.push(location.state.referrer);
+      } else {
+        history.push('/');
+      }
     } else {
       // eslint-disable-next-line
       console.warn('error login');
@@ -111,6 +117,7 @@ AuthenticationPage.propTypes = {
     }),
   ),
   history: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
 };
 
 export default withRouter(
