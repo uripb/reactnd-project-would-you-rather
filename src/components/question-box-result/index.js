@@ -23,7 +23,7 @@ const QuestionBoxResult = (props) => {
           aria-valuemin="0"
           aria-valuemax="100"
         >
-          {`${percent}%`}
+          {`${percent.toFixed(1)}%`}
         </div>
       </div>
       <span className="total-votes">{`${votes} out of ${totalVotes} votes`}</span>

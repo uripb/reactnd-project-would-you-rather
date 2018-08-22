@@ -5,11 +5,15 @@ import './styles.scss';
 
 const QuestionsTab = ({ questions, users, onViewPollClick }) => (
   <div className="tab-content">
-    {questions.map(question => (
-      <QuestionItem key={question.id} user={users[question.author]}>
-        <QuestionItemDetail question={question} onViewPollClick={onViewPollClick} />
-      </QuestionItem>
-    ))}
+    {questions.length > 0 ? (
+      questions.map(question => (
+        <QuestionItem key={question.id} user={users[question.author]}>
+          <QuestionItemDetail question={question} onViewPollClick={onViewPollClick} />
+        </QuestionItem>
+      ))
+    ) : (
+      <div className="empty-text my-5">There is no question to display...</div>
+    )}
   </div>
 );
 
