@@ -1,0 +1,8 @@
+.nav-item {
+  cursor: pointer;
+  .nav-link {
+    &.active {
+      font-weight: 400;
+    }
+  }
+}

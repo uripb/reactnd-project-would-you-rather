@@ -1,0 +1,32 @@
+@import "colors.scss";
+.user-scores {
+  .totals {
+    border-bottom: 1px solid $tabBorder;
+    .lbl-text {
+      font-weight: 400;
+      font-size: 16px;
+    }
+    .value-text {
+      font-weight: 400;
+      font-size: 18px;
+    }
+  }
+  .score {
+    .lbl-text {
+      font-weight: 500;
+      font-size: 24px;
+      text-transform: uppercase;
+    }
+    .value-text {
+      font-weight: 500;
+      font-size: 24px;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      background: $greenBg;
+      border: 1px solid $greenBorder;
+      color: $blackText;
+      margin: auto;
+    }
+  }
+}

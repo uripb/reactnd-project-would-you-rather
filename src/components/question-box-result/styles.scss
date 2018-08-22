@@ -1,0 +1,32 @@
+@import "colors.scss";
+.question-box-result {
+  border: 1px solid $tabBorder;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: $greyLightBg;
+  &.user-answer {
+    border-color: $greenBorder;
+    background-color: $greenBg;
+    color: $greenText;
+  }
+  .question-text {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .progress {
+    background-color: $tabBorder;
+    height: 25px;
+    .progress-bar {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+  .total-votes {
+    display: block;
+    margin-top: 4px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 13px;
+    color: $blackText;
+  }
+}

@@ -1,0 +1,24 @@
+@import "colors.scss";
+.card-question-item {
+  max-width: 600px;
+  margin: auto;
+  .card-header {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .card-body {
+    padding: 14px;
+    .avatar {
+      border-right: 1px solid $tabBorder;
+      text-align: center;
+      img {
+        width: 105px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
