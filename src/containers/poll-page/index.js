@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { QuestionItem, QuestionItemPoll } from 'components';
+import { QuestionItem, QuestionItemPoll, QuestionItemResults } from 'components';
 import { handleAnswerQuestion } from 'actions';
 
 const mapStateToProps = ({ questions, authedUser, users }, ownProps) => {
@@ -26,20 +26,24 @@ class PollPage extends PureComponent {
   };
 
   renderPoll() {
-    const { user, question } = this.props;
-    return (
-      <QuestionItem user={user}>
-        <QuestionItemPoll question={question} onSubmitClick={this.onSubmitClick} />
-      </QuestionItem>
-    );
+    const { question } = this.props;
+    return <QuestionItemPoll question={question} onSubmitClick={this.onSubmitClick} />;
+  }
+
+  renderResults() {
+    const { question, authedUser } = this.props;
+    const answer = authedUser.answers[question.id];
+    return <QuestionItemResults question={question} answer={answer} />;
   }
 
   render() {
-    const { authedUser, question } = this.props;
+    const { user, authedUser, question } = this.props;
     const isAnswered = Object.keys(authedUser.answers).includes(question.id);
     return (
       <div className="container poll-page-container mt-5">
-        {isAnswered ? <div>answered</div> : this.renderPoll()}
+        <QuestionItem user={user}>
+          {isAnswered ? this.renderResults() : this.renderPoll()}
+        </QuestionItem>
       </div>
     );
   }

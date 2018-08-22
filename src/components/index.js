@@ -4,6 +4,7 @@ import QuestionsTab from './questions-tab';
 import QuestionItem from './question-item';
 import QuestionItemPoll from './question-item-poll';
 import QuestionItemDetail from './question-item-detail';
+import QuestionItemResults from './question-item-results';
 
 export {
   AuthorizedRoute,
@@ -12,4 +13,5 @@ export {
   QuestionItem,
   QuestionItemPoll,
   QuestionItemDetail,
+  QuestionItemResults,
 };

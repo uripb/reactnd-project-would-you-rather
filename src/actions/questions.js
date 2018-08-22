@@ -52,6 +52,7 @@ export function handleAddQuestion(optionOneText, optionTwoText) {
 
 export function handleAnswerQuestion(qid, answer) {
   return (dispatch, getState) => {
+    dispatch(showLoading());
     const { authedUser } = getState();
     const saveData = {
       qid,
@@ -59,6 +60,8 @@ export function handleAnswerQuestion(qid, answer) {
       authedUser,
     };
 
-    return saveQuestionAnswer(saveData).then(() => dispatch(answerQuestion(saveData)));
+    return saveQuestionAnswer(saveData)
+      .then(() => dispatch(answerQuestion(saveData)))
+      .then(() => dispatch(hideLoading()));
   };
 }
