@@ -5,6 +5,7 @@ import QuestionItem from './question-item';
 import QuestionItemPoll from './question-item-poll';
 import QuestionItemDetail from './question-item-detail';
 import QuestionItemResults from './question-item-results';
+import UserScores from './user-scores';
 
 export {
   AuthorizedRoute,
@@ -14,4 +15,5 @@ export {
   QuestionItemPoll,
   QuestionItemDetail,
   QuestionItemResults,
+  UserScores,
 };

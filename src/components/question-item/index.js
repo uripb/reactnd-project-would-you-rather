@@ -4,10 +4,12 @@ import './styles.scss';
 
 class QuestionItem extends PureComponent {
   render() {
-    const { user, children } = this.props;
+    const {
+      user, children, className, title,
+    } = this.props;
     return (
-      <div className="card card-question-item">
-        <div className="card-header">{`${user.name} asks:`}</div>
+      <div className={`card card-question-item ${className}`}>
+        <div className="card-header">{title.length > 0 ? title : `${user.name} asks:`}</div>
         <div className="card-body">
           <div className="row">
             <div className="col-4 avatar">
@@ -23,6 +25,8 @@ class QuestionItem extends PureComponent {
 
 QuestionItem.defaultProps = {
   children: null,
+  className: '',
+  title: '',
 };
 
 QuestionItem.propTypes = {
@@ -33,6 +37,8 @@ QuestionItem.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  className: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default QuestionItem;
