@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { QuestionItem, QuestionItemPoll } from 'components';
+import { handleAnswerQuestion } from 'actions';
 
 const mapStateToProps = ({ questions, authedUser, users }, ownProps) => {
   const { match } = ownProps;
@@ -9,29 +10,36 @@ const mapStateToProps = ({ questions, authedUser, users }, ownProps) => {
   const user = users[question.author];
   return {
     question,
-    authedUser,
+    authedUser: users[authedUser],
     user,
   };
 };
 
+const mapDispatchToProps = {
+  answerQuestion: handleAnswerQuestion,
+};
+
 class PollPage extends PureComponent {
+  onSubmitClick = (qid, answer) => {
+    const { answerQuestion } = this.props;
+    answerQuestion(qid, answer);
+  };
+
   renderPoll() {
     const { user, question } = this.props;
     return (
       <QuestionItem user={user}>
-        <QuestionItemPoll question={question} />
+        <QuestionItemPoll question={question} onSubmitClick={this.onSubmitClick} />
       </QuestionItem>
     );
   }
 
   render() {
-    const { question, authedUser } = this.props;
-    const isAnswered = question.optionOne.votes
-      .concat(question.optionTwo.votes)
-      .includes(authedUser);
+    const { authedUser, question } = this.props;
+    const isAnswered = Object.keys(authedUser.answers).includes(question.id);
     return (
       <div className="container poll-page-container mt-5">
-        {isAnswered ? this.renderPoll() : <div>answered</div>}
+        {isAnswered ? <div>answered</div> : this.renderPoll()}
       </div>
     );
   }
@@ -39,7 +47,6 @@ class PollPage extends PureComponent {
 
 PollPage.defaultProps = {
   match: {},
-  user: {},
 };
 
 PollPage.propTypes = {
@@ -61,9 +68,18 @@ PollPage.propTypes = {
     avatarURL: PropTypes.string,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-  }),
-  authedUser: PropTypes.string.isRequired,
+  }).isRequired,
+  authedUser: PropTypes.shape({
+    answers: PropTypes.shape({}),
+    avatarURL: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
   match: PropTypes.shape({}),
+  answerQuestion: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(PollPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PollPage);

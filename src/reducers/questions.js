@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS, ADD_QUESTION } from 'constants/ActionTypes';
+import { RECEIVE_QUESTIONS, ADD_QUESTION, SAVE_QUESTION_ANSWER } from 'constants/ActionTypes';
 
 export default function users(state = {}, action) {
   switch (action.type) {
@@ -14,6 +14,14 @@ export default function users(state = {}, action) {
           ...action.question,
         },
       };
+    case SAVE_QUESTION_ANSWER: {
+      const question = state[action.qid];
+      question[action.answer].votes.push(action.authedUser);
+      return {
+        ...state,
+        [action.qid]: question,
+      };
+    }
     default:
       return state;
   }

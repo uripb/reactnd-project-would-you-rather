@@ -10,12 +10,11 @@ import './styles.scss';
 
 const mapStateToProps = ({ questions, users, authedUser }) => {
   const questionsList = Object.values(questions).sort((a, b) => b.timestamp - a.timestamp);
+  const userAnswers = Object.keys(users[authedUser].answers);
   return {
     questions: questionsList,
     users,
-    userQuestions: questionsList.filter(
-      q => q.optionOne.votes.includes(authedUser) || q.optionTwo.votes.includes(authedUser),
-    ),
+    userAnsweredQuestions: questionsList.filter(q => userAnswers.includes(q.id)),
   };
 };
 
@@ -82,7 +81,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const { questions, users, userQuestions } = this.props;
+    const { questions, users, userAnsweredQuestions } = this.props;
 
     return (
       <div className="container home-container mt-3">
@@ -106,7 +105,7 @@ class HomePage extends Component {
                 render={props => (
                   <QuestionsTab
                     {...props}
-                    questions={userQuestions}
+                    questions={userAnsweredQuestions}
                     users={users}
                     onViewPollClick={this.onViewPollClick}
                   />
