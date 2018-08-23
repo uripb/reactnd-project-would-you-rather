@@ -21,6 +21,7 @@ const DefaultPage = (props) => {
           <Route path="/add" component={NewQuestionPage} />
           <Route path="/leaderboard" component={LeaderBoardPage} />
           <Route path="/questions/:question_id" component={PollPage} />
+          <Route path="/notfound" component={NotFoundPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>

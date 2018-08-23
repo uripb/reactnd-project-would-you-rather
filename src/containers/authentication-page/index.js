@@ -10,7 +10,7 @@ const mapStateToProps = ({ users }) => ({
 });
 
 const mapDispatchToProps = {
-  receiveUsersFn: receiveUsers,
+  getUsers: receiveUsers,
   setAuthedUserFn: setAuthedUser,
 };
 
@@ -23,8 +23,10 @@ class AuthenticationPage extends Component {
   }
 
   componentDidMount() {
-    const { receiveUsersFn } = this.props;
-    receiveUsersFn();
+    const { getUsers, users } = this.props;
+    if (Object.keys(users).length === 0) {
+      getUsers();
+    }
   }
 
   onChangeSelect = (selectedUser) => {
@@ -106,7 +108,7 @@ AuthenticationPage.defaultProps = {
 };
 
 AuthenticationPage.propTypes = {
-  receiveUsersFn: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
   setAuthedUserFn: PropTypes.func.isRequired,
   users: PropTypes.objectOf(
     PropTypes.shape({

@@ -1,17 +1,19 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { QuestionItem, QuestionItemPoll, QuestionItemResults } from 'components';
 import { handleAnswerQuestion, handleQuestions } from 'actions';
 
 const mapStateToProps = ({ questions, authedUser, users }, ownProps) => {
   const { match } = ownProps;
   const question = questions[match.params.question_id];
-  const user = question ? users[question.author] : {};
+  const user = question ? users[question.author] : null;
   return {
     question,
     authedUser: users[authedUser],
     user,
+    notExists: Object.keys(questions).length > 0 && !question,
   };
 };
 
@@ -23,10 +25,22 @@ const mapDispatchToProps = {
 class PollPage extends PureComponent {
   componentDidMount() {
     const { question, getQuestions } = this.props;
+    this.checkNotExists();
     if (!question) {
       getQuestions();
     }
   }
+
+  componentDidUpdate() {
+    this.checkNotExists();
+  }
+
+  checkNotExists = () => {
+    const { notExists, history } = this.props;
+    if (notExists) {
+      history.replace('/notfound');
+    }
+  };
 
   onSubmitClick = (qid, answer) => {
     const { answerQuestion } = this.props;
@@ -64,6 +78,9 @@ class PollPage extends PureComponent {
 
 PollPage.defaultProps = {
   match: {},
+  question: null,
+  user: null,
+  notExists: false,
 };
 
 PollPage.propTypes = {
@@ -80,13 +97,13 @@ PollPage.propTypes = {
       votes: PropTypes.arrayOf(PropTypes.string),
     }),
     timestamp: PropTypes.number,
-  }).isRequired,
+  }),
   user: PropTypes.shape({
     answers: PropTypes.shape({}),
     avatarURL: PropTypes.string,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   authedUser: PropTypes.shape({
     answers: PropTypes.shape({}),
     avatarURL: PropTypes.string,
@@ -95,9 +112,13 @@ PollPage.propTypes = {
   }).isRequired,
   match: PropTypes.shape({}),
   answerQuestion: PropTypes.func.isRequired,
+  notExists: PropTypes.bool,
+  history: PropTypes.shape({}).isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PollPage);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(PollPage),
+);
