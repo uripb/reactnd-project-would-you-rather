@@ -17,22 +17,18 @@ const mapDispatchToProps = {
 class Nav extends Component {
   constructor(props) {
     super(props);
-    const { location } = props;
     this.state = {
       sections: {
         home: {
           label: 'Home',
-          active: location.pathname === '/',
           route: '/',
         },
         add: {
           label: 'New Question',
-          active: location.pathname === '/add',
           route: '/add',
         },
         leaderboard: {
           label: 'Leader Board',
-          active: location.pathname === '/leaderboard',
           route: '/leaderboard',
         },
       },
@@ -58,6 +54,7 @@ class Nav extends Component {
   };
 
   renderNavItems() {
+    const { location } = this.props;
     const { sections } = this.state;
 
     return Object.keys(sections).map((key) => {
@@ -67,7 +64,7 @@ class Nav extends Component {
           key={key}
           label={section.label}
           to={section.route}
-          active={section.active}
+          active={section.route === location.pathname}
           onClick={() => this.onClickNavItem(key)}
         />
       );
