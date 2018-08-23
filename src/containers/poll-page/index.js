@@ -22,8 +22,10 @@ const mapDispatchToProps = {
 
 class PollPage extends PureComponent {
   componentDidMount() {
-    const { getQuestions } = this.props;
-    getQuestions();
+    const { question, getQuestions } = this.props;
+    if (!question) {
+      getQuestions();
+    }
   }
 
   onSubmitClick = (qid, answer) => {
